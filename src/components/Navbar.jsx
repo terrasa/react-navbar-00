@@ -19,9 +19,16 @@ export function Navbar () {
     event.preventDefault()
     console.log('target', event.target.tagName)
     const isNavbar = event.target.closest('.navbar__links.open')
-    const isLinkNavbar = event.target.tagName === 'A'
+    const linkNavbar = event.target.tagName === 'A'
+    const isLinkNavbar = linkNavbar && event.target.closest('.navbar__links.open')
     console.log('isNavbar', isNavbar)
     console.log('isLinkNavbar', isLinkNavbar)
+
+    if (isLinkNavbar) {
+      setShowNavbar(!showNavbar)
+      window.removeEventListener('click', elementTarget)
+      console.log('Remove')
+    }
 
     if (!isNavbar) {
       setShowNavbar(!showNavbar)
