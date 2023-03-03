@@ -7,46 +7,34 @@ export function Navbar () {
 
   const handleShowMenu = (event) => {
     event.stopPropagation()
+
+    // showNavbar
+    //   ? window.removeEventListener('click', elementTarget)
+    //   : window.addEventListener('click', elementTarget)
+
     if (showNavbar) {
       window.removeEventListener('click', elementTarget)
     }
     setShowNavbar(!showNavbar)
-    console.log(event.target)
   }
 
   const elementTarget = (event) => {
     event.stopPropagation()
     event.preventDefault()
-    console.log('target', event.target.tagName)
-    const isNavbar = event.target.closest('.navbar__links.open')
+    const isNavbar = event.target.closest('.navbar__links.open') !== null
     const linkNavbar = event.target.tagName === 'A'
-    const isLinkNavbar = linkNavbar && event.target.closest('.navbar__links.open')
-    console.log('isNavbar', isNavbar)
-    console.log('isLinkNavbar', isLinkNavbar)
+    const isLinkNavbar = linkNavbar && event.target.closest('.navbar__links.open').length !== 0
 
-    if (isLinkNavbar) {
-      setShowNavbar(!showNavbar)
+    if (isLinkNavbar || !isNavbar) {
+      setShowNavbar(prevShowNavbar => !prevShowNavbar)
       window.removeEventListener('click', elementTarget)
-      console.log('Remove')
-    }
-
-    if (!isNavbar) {
-      setShowNavbar(!showNavbar)
-      window.removeEventListener('click', elementTarget)
-      console.log('Remove')
     }
   }
 
   if (showNavbar) {
-    console.log('Add')
     window.addEventListener('click', elementTarget)
   }
 
-  // showNavbar
-  //   ? window.removeEventListener('click', elementTarget)
-  //   : window.addEventListener('click', elementTarget)
-
-  // || isLinkNavbar.closest('.navbar__links.open')
   return (
     <>
       <nav className='navbar'>
